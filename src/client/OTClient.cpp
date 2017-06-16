@@ -40,6 +40,7 @@
 
 #include "opentxs/client/OTClient.hpp"
 
+#include "opentxs/api/Api.hpp"
 #include "opentxs/api/OT.hpp"
 #include "opentxs/api/Settings.hpp"
 #include "opentxs/api/Wallet.hpp"
@@ -47,6 +48,7 @@
 #include "opentxs/cash/Purse.hpp"
 #include "opentxs/cash/Token.hpp"
 #include "opentxs/client/Helpers.hpp"
+#include "opentxs/client/OTME_too.hpp"
 #include "opentxs/client/OTMessageOutbuffer.hpp"
 #include "opentxs/client/OTWallet.hpp"
 #include "opentxs/consensus/ServerContext.hpp"
@@ -319,6 +321,8 @@ bool OTClient::AcceptEntireNymbox(
 
                     switch (type) {
                         case (proto::PEEROBJECT_MESSAGE) : {
+                            OT::App().API().OTME_TOO().AddContact(
+                                pMessage->m_strNymID.Get());
                             OT::App().Contract().Mail(
                                 theNymID,
                                 *pMessage,
